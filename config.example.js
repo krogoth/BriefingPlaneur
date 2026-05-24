@@ -11,7 +11,7 @@
  *   - activez GitHub Pages sur la branche main / dossier root
  *   - votre briefing est accessible sur https://<org>.github.io/<repo>/
  */
-const CLUB_CONFIG = {
+window.CLUB_CONFIG = {
 
   // --- INFOS CLUB ---
   club:      "Mon Aéroclub",        // Nom affiché dans le header

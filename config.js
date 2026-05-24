@@ -3,7 +3,7 @@
  * Copier config.example.js → config.js, ne pas committer config.js dans un fork public
  * si vous ne souhaitez pas exposer les détails de votre club.
  */
-const CLUB_CONFIG = {
+window.CLUB_CONFIG = {
 
   // Infos club
   club:      "Espoirs Aéronautiques de Sarreguemines",

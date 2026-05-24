@@ -21,6 +21,7 @@ export function renderVent(container) {
           <img src="https://www.meteociel.fr/modeles/arome/cartes.php?ech=${c.ech}&code=${c.code}&type=0"
                alt="${c.label}"
                loading="lazy"
+               referrerpolicy="no-referrer"
                onerror="this.closest('.meteo-img-wrap').innerHTML='<div class=loading-placeholder>Image indisponible</div>'" />
           <span class="img-label">${c.label}</span>
         </div>`).join('')}

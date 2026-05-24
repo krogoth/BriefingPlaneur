@@ -27,7 +27,7 @@ export function renderSituation(container) {
         <div class="meteo-img-wrap">
           <img src="https://aviation.meteo.fr/FR/aviation/XDT_PX.php?TYPE=TEMSI_FB&AREA=FRANCE&ECHT=null&OACI=LFPB"
                alt="TEMSI France"
-               onerror="this.src='https://www.meteociel.fr/cartes_obs/analyses/analysis_surface.gif'" />
+               onerror="this.closest('.meteo-img-wrap').innerHTML='<div class=loading-placeholder>Image indisponible</div>'" />
           <span class="img-label">TEMSI France (Météo France Aviation)</span>
         </div>
         <div class="meteo-img-wrap">

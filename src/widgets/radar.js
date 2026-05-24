@@ -24,7 +24,7 @@ export function renderRadar(container) {
     <div class="card">
       <div class="card-title">Évolution précipitations AROME — prochaines 12h</div>
       <div class="img-grid cols-3">
-        ${[3, 6, 12].map(h => `
+        ${[6, 12, 24].map(h => `
         <div class="meteo-img-wrap">
           <img src="https://www.meteociel.fr/modeles/arome/cartes.php?ech=${h}&code=200&type=0"
                alt="AROME précipitations H+${h}"

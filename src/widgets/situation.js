@@ -9,12 +9,14 @@ export function renderSituation(container) {
         <div class="meteo-img-wrap">
           <img src="https://www.meteociel.fr/modeles/gfse_cartes.php?ech=0&code=0&type=0"
                alt="Analyse surface"
+               referrerpolicy="no-referrer"
                onerror="this.closest('.meteo-img-wrap').innerHTML='<div class=loading-placeholder>Image indisponible</div>'" />
           <span class="img-label">Analyse de surface (Météociel)</span>
         </div>
         <div class="meteo-img-wrap">
           <img src="https://www.meteociel.fr/modeles/gfse_cartes.php?ech=24&code=0&type=0"
                alt="Prévision H+24"
+               referrerpolicy="no-referrer"
                onerror="this.closest('.meteo-img-wrap').innerHTML='<div class=loading-placeholder>Image indisponible</div>'" />
           <span class="img-label">Prévision H+24 (GFS)</span>
         </div>
@@ -27,12 +29,14 @@ export function renderSituation(container) {
         <div class="meteo-img-wrap">
           <img src="https://aviation.meteo.fr/FR/aviation/XDT_PX.php?TYPE=TEMSI_FB&AREA=FRANCE&ECHT=null&OACI=LFPB"
                alt="TEMSI France"
+               referrerpolicy="no-referrer"
                onerror="this.closest('.meteo-img-wrap').innerHTML='<div class=loading-placeholder>Image indisponible</div>'" />
           <span class="img-label">TEMSI France (Météo France Aviation)</span>
         </div>
         <div class="meteo-img-wrap">
           <img src="https://www.meteociel.fr/modeles/arome/cartes.php?ech=12&code=500&type=0"
                alt="Géopotentiel 500 hPa"
+               referrerpolicy="no-referrer"
                onerror="this.closest('.meteo-img-wrap').innerHTML='<div class=loading-placeholder>Image indisponible</div>'" />
           <span class="img-label">Géopotentiel 500 hPa (AROME)</span>
         </div>

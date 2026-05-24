@@ -1,10 +1,5 @@
 // Widget : METAR + TAF + Calcul FL dynamique
-// Source METAR : NOAA aviationweather.gov (API publique, pas d'auth)
-// Calcul FL → altitude en ft pour un FL donné en fonction du QNH
-
-// Table QNH → correction d'altitude (ISA standard)
-// FL = (pression standard - QNH) * 27 pieds + altitude FL standard
-// Formule précise : alt_ft = FL * 100 + (1013.25 - QNH_hPa) * 27
+// Source METAR : NOAA aviationweather.gov via corsproxy.io (CORS bloqué depuis github.io)
 
 const FL_TABLE = [45, 55, 65, 75, 85, 95, 105, 115, 125];
 
@@ -53,15 +48,9 @@ function windCardinalDir(deg_str) {
 }
 
 async function fetchText(url) {
-  try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return await r.text();
-  } catch {
-    const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return await r.text();
-  }
+  const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return await r.text();
 }
 
 async function fetchMETAR(icao) {

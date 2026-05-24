@@ -129,6 +129,18 @@ function activateFirstTab() {
   activateTab(target);
 }
 
+async function fetchText(url) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.text();
+  } catch {
+    const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.text();
+  }
+}
+
 // ── METAR live dans le header ──────────────────────────────────────
 async function fetchHeaderMETAR(config) {
   const { metar_icao, metar_icao_fallback } = config;
@@ -137,8 +149,7 @@ async function fetchHeaderMETAR(config) {
 
   try {
     const url = `https://aviationweather.gov/api/data/metar?ids=${metar_icao}&format=raw&hours=1`;
-    const res  = await fetch(url);
-    const text = (await res.text()).trim().split('\n')[0];
+    const text = (await fetchText(url)).trim().split('\n')[0];
     if (text) {
       el.textContent = text;
       el.style.color = 'var(--text-dim)';
@@ -148,8 +159,7 @@ async function fetchHeaderMETAR(config) {
   } catch {
     try {
       const url2 = `https://aviationweather.gov/api/data/metar?ids=${metar_icao_fallback}&format=raw&hours=1`;
-      const res2 = await fetch(url2);
-      const text2 = (await res2.text()).trim().split('\n')[0];
+      const text2 = (await fetchText(url2)).trim().split('\n')[0];
       el.textContent = `[${metar_icao_fallback}] ${text2}`;
       el.style.color = 'var(--text-dim)';
     } catch {

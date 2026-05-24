@@ -130,15 +130,9 @@ function activateFirstTab() {
 }
 
 async function fetchText(url) {
-  try {
-    const r = await fetch(url);
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return await r.text();
-  } catch {
-    const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
-    if (!r.ok) throw new Error(`HTTP ${r.status}`);
-    return await r.text();
-  }
+  const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
+  if (!r.ok) throw new Error(`HTTP ${r.status}`);
+  return await r.text();
 }
 
 // ── METAR live dans le header ──────────────────────────────────────

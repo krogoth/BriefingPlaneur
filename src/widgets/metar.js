@@ -52,21 +52,28 @@ function windCardinalDir(deg_str) {
   return dirs[Math.round(deg / 22.5) % 16];
 }
 
+async function fetchText(url) {
+  try {
+    const r = await fetch(url);
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.text();
+  } catch {
+    const r = await fetch('https://corsproxy.io/?' + encodeURIComponent(url));
+    if (!r.ok) throw new Error(`HTTP ${r.status}`);
+    return await r.text();
+  }
+}
+
 async function fetchMETAR(icao) {
-  // API NOAA aviationweather.gov — CORS ok, pas d'auth
   const url = `https://aviationweather.gov/api/data/metar?ids=${icao}&format=raw&hours=2`;
-  const res  = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  const text = await res.text();
+  const text = await fetchText(url);
   const lines = text.trim().split('\n').filter(l => l.trim());
-  return lines[0] || null; // METAR le plus récent
+  return lines[0] || null;
 }
 
 async function fetchTAF(icao) {
   const url = `https://aviationweather.gov/api/data/taf?ids=${icao}&format=raw`;
-  const res  = await fetch(url);
-  if (!res.ok) throw new Error(`HTTP ${res.status}`);
-  return (await res.text()).trim();
+  return (await fetchText(url)).trim();
 }
 
 export async function renderMetar(container, config) {

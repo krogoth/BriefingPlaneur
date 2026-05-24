@@ -12,26 +12,32 @@ export function renderSondage(container, config) {
   const day   = String(now.getUTCDate()).padStart(2, '0');
   const hour  = now.getUTCHours();
 
-  // On affiche les 2 derniers : si > 12Z on a 12Z du jour et 00Z du jour, sinon 00Z du jour et 12Z de J-1
+  // Soundings disponibles ~2h après le lâcher (00Z → dispo ~02Z, 12Z → dispo ~14Z)
   const soundings = [];
 
+  const yesterday = new Date(now);
+  yesterday.setUTCDate(now.getUTCDate() - 1);
+  const yd = String(yesterday.getUTCDate()).padStart(2, '0');
+  const ym = String(yesterday.getUTCMonth() + 1).padStart(2, '0');
+  const yy = yesterday.getUTCFullYear();
+
   if (hour >= 14) {
-    soundings.push({ label: `${sounding_label} 12Z`, from: `${day}12`, year, month });
-    soundings.push({ label: `${sounding_label} 00Z`, from: `${day}00`, year, month });
+    // 12Z du jour disponible depuis ~14Z
+    soundings.push({ label: `${sounding_label} 12Z`,      from: `${day}12`, year,  month });
+    soundings.push({ label: `${sounding_label} 00Z`,      from: `${day}00`, year,  month });
+  } else if (hour >= 3) {
+    // 00Z du jour disponible depuis ~02-03Z
+    soundings.push({ label: `${sounding_label} 00Z`,      from: `${day}00`, year,  month });
+    soundings.push({ label: `${sounding_label} 12Z (J-1)`,from: `${yd}12`,  year: yy, month: ym });
   } else {
-    // Avant 14Z, le 12Z n'est pas encore disponible
-    soundings.push({ label: `${sounding_label} 00Z`, from: `${day}00`, year, month });
-    // 12Z de la veille
-    const yesterday = new Date(now);
-    yesterday.setUTCDate(now.getUTCDate() - 1);
-    const yd  = String(yesterday.getUTCDate()).padStart(2, '0');
-    const ym  = String(yesterday.getUTCMonth() + 1).padStart(2, '0');
-    const yy  = yesterday.getUTCFullYear();
-    soundings.push({ label: `${sounding_label} 12Z (J-1)`, from: `${yd}12`, year: yy, month: ym });
+    // Avant 03Z : 00Z du jour pas encore ingéré, on replie sur J-1
+    soundings.push({ label: `${sounding_label} 12Z (J-1)`,from: `${yd}12`,  year: yy, month: ym });
+    soundings.push({ label: `${sounding_label} 00Z (J-1)`,from: `${yd}00`,  year: yy, month: ym });
   }
 
+  // TO=FROM pour un seul relevé (évite un bug de plage Wyoming)
   const imgUrl = (s) =>
-    `https://weather.uwyo.edu/cgi-bin/plotsounding.py?TYPE=skewt&YEAR=${s.year}&MONTH=${s.month}&FROM=${s.from}&STNM=${sounding_station}`;
+    `https://weather.uwyo.edu/cgi-bin/plotsounding.py?TYPE=skewt&YEAR=${s.year}&MONTH=${s.month}&FROM=${s.from}&TO=${s.from}&STNM=${sounding_station}`;
 
   container.innerHTML = `
     <div class="card">

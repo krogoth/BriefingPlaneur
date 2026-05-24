@@ -1,0 +1,11 @@
+# Config locale du club — à ne pas committer si repo public
+# Chaque club fork et crée son propre config.js à partir de config.example.js
+config.js
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+*.swp

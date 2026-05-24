@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="description" content="Briefing météo planeur" />
+  <meta name="theme-color" content="#0f1117" />
+
+  <!-- PWA manifest -->
+  <link rel="manifest" href="manifest.json" />
+
+  <title>Briefing Planeur</title>
+  <link rel="stylesheet" href="src/style.css" />
+
+  <!-- Inter font (Google Fonts, peut être retiré pour usage offline) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Header fixe avec nom club + METAR compact -->
+  <header id="app-header">
+    <!-- Rempli par app.js / buildHeader() -->
+    <h1>Chargement…</h1>
+  </header>
+
+  <!-- Barre d'onglets scrollable -->
+  <nav id="tab-bar" role="tablist" aria-label="Sections du briefing">
+    <!-- Onglets générés dynamiquement par app.js -->
+  </nav>
+
+  <!-- Zone de contenu — panels injectés dynamiquement -->
+  <main id="content" role="main">
+  </main>
+
+  <!-- Config club — chargée en premier, expose window.CLUB_CONFIG -->
+  <script src="config.js"></script>
+
+  <!-- App principale en ES modules -->
+  <script type="module" src="src/app.js"></script>
+
+</body>
+</html>
